@@ -14,7 +14,7 @@ namespace Distribucion_de_Reparaciones_Geneticos
         }
         public override Tuple<int, int> Selection(List<float> fitness)
         {
-            if (fitness.Count() <= 1) return 0;
+            if (fitness.Count() <= 1) return Tuple.Create<int, int>(0, 0);
 
             int parentIndexA = random.Next(0, fitness.Count() - 1);
             int parentIndexB = random.Next(0, fitness.Count() - 1);
