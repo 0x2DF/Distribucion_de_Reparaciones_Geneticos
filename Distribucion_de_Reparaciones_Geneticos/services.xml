@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Services>
+  <service>
+    <code>ICE</code>
+    <description>Instalacion de cocina electrica</description>
+    <duration>2</duration>
+    <commission>250</commission>
+  </service>
+  <service>
+    <code>ICG</code>
+    <description>Instalacion de cocina de gas</description>
+    <duration>4</duration>
+    <commission>400</commission>
+  </service>
+  <service>
+    <code>ILA</code>
+    <description>Instalacion de lavadora automatica</description>
+    <duration>1</duration>
+    <commission>200</commission>
+  </service>
+  <service>
+    <code>RCE</code>
+    <description>Reparacion de cocina electrica</description>
+    <duration>4</duration>
+    <commission>300</commission>
+  </service>
+  <service>
+    <code>RCG</code>
+    <description>Reparacion de cocina de gas</description>
+    <duration>6</duration>
+    <commission>500</commission>
+  </service>
+  <service>
+    <code>RLA</code>
+    <description>Reparacion de lavadora automatica</description>
+    <duration>6</duration>
+    <commission>250</commission>
+  </service>
+</Services>
