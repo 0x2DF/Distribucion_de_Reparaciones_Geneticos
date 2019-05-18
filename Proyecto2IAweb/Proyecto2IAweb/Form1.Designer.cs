@@ -1,4 +1,4 @@
-﻿namespace Distribucion_de_Reparaciones_Geneticos
+﻿namespace Proyecto2IAweb
 {
     partial class Form1
     {

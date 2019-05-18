@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Collections;
-using System.Xml;
 using System.Diagnostics;
+using System.Xml;
 
-namespace Distribucion_de_Reparaciones_Geneticos
+namespace Proyecto2IAweb
 {
     public partial class Form1 : Form
     {
@@ -28,7 +20,7 @@ namespace Distribucion_de_Reparaciones_Geneticos
 
             XmlDocument xml = new XmlDocument();
             xml.Load(services_xml);
-            
+
             var tasks = xml["Services"];
 
             foreach (XmlNode node in tasks)
@@ -55,7 +47,7 @@ namespace Distribucion_de_Reparaciones_Geneticos
                             break;
                     }
                 }
-                
+
                 if (service.Code != null) services.Add(service.Code, service);
             }
 
@@ -66,7 +58,7 @@ namespace Distribucion_de_Reparaciones_Geneticos
         {
             Dictionary<string, Service> services = load_services();
 
-            foreach(KeyValuePair<string, Service> entry in services)
+            foreach (KeyValuePair<string, Service> entry in services)
             {
                 Service service = entry.Value;
                 Debug.Print("Code : " + service.Code + "\nDescription : " + service.Description + "\nDuration : " + service.Duration + "\nCommission : " + service.Commission);

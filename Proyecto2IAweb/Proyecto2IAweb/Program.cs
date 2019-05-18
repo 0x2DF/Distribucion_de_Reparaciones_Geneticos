@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Distribucion_de_Reparaciones_Geneticos
+namespace Proyecto2IAweb
 {
     static class Program
     {

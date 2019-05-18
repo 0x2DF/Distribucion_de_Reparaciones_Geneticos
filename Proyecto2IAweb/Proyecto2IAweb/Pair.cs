@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Distribucion_de_Reparaciones_Geneticos
+namespace Proyecto2IAweb
 {
     class Pair<T1, T2>
     {
