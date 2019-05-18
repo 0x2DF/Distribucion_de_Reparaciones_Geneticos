@@ -5,14 +5,9 @@ using System.Xml;
 
 namespace Proyecto2IAweb
 {
-    public partial class Form1 : Form
+    public partial class Form1
     {
         private const string services_xml = "..\\..\\services.xml";
-
-        public Form1()
-        {
-            InitializeComponent();
-        }
 
         private Dictionary<string, Service> load_services()
         {
