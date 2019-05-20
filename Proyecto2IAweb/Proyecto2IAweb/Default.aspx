@@ -14,17 +14,19 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+          <div class="container">
 
-            <h1 class="text-center">Distribución de reparaciones</h1>
-            <div  class="input-group mb-3">
+            <h1 class="text-center">Distribución de reparaciones</h1><br />
+            <div  class="input-group mb-3 text-center">
                 <label>Seleccione la lista de agentes de servicio</label>
-                <asp:FileUpload ID="FileUpload1" runat="server" /><br/>
-                <asp:Button ID="Button1" runat="server" Text="Cargar" class="btn btn-primary btn-lg" Width="97px" Height="27px"/>
+                <asp:FileUpload ID="FileUpload1" runat="server" />   
+                <asp:Button ID="Button1" runat="server" Text="Cargar" class="btn btn-primary btn-lg" />
             </div>
 
-        </div><br />
+        </div>
+        <br />
         <div class="container">
+            <h2 class="text-center">Agentes</h2>
             <table class="table" ID="ServiceAgents" runat="server">
               <caption class="text-center">Agentes de servicio</caption>
               <thead class="thead-dark">
@@ -55,6 +57,7 @@
         </div>
         <br /><br />
         <div class="container">
+            <h2 class="text-center">Servicios</h2>
             <table class="table" ID="ServiceOrders" runat="server">
               <caption class="text-center">Ordenes de servicio</caption>
               <thead class="thead-dark">
@@ -82,25 +85,27 @@
                 </tr>
               </tbody>
             </table>
-        </div>
-
-        <div class="row">
-              <div class="col-3">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
-                  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
-                  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-                  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+        </div><br />
+        <div class="container">
+            <h2 class="text-center">Distribución final</h2>
+            <div class="row" >
+                  <div class="col-3">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Persona 1</a>
+                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Persona 2</a>
+                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Persona 3</a>
+                      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Persona 4</a>
+                    </div>
+                  </div>
+                  <div class="col-9">
+                    <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">Distribucion</div>
+                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Distribucion</div>
+                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Distribucion</div>
+                      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">Distribucion</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">1</div>
-                  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">2</div>
-                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">3</div>
-                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">4</div>
-                </div>
-              </div>
             </div>
     </form>
 </body>
