@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace Proyecto2IAweb
@@ -19,48 +20,8 @@ namespace Proyecto2IAweb
             Fill_Table_Agents();
             Fill_Table_Services();
             Fill_People_Pills();
-            //Fill_People_Pills_Services();
-
-            int total = 5;
-            int rowHeader = 4;
-            //for (int j = 0; j < total; j++)
-            //{
-            //    Table t = new Table();
-            //    t.Attributes["CssClass"] = "table table-borderless";
-            //    TableHeaderRow thr = new TableHeaderRow();
-            //    for (int i = 0; i < rowHeader; i++)
-            //    {
-            //        TableHeaderCell thc = new TableHeaderCell();
-            //        if (i == 0) thc.Controls.Add(new LiteralControl("ID"));
-            //        else if (i == 1) thc.Controls.Add(new LiteralControl("Nombre"));
-            //        else if (i == 2) thc.Controls.Add(new LiteralControl("Total de Comisión"));
-            //        else thc.Controls.Add(new LiteralControl("Total de Horas de Atención"));
-            //        thc.Attributes.Add("Scope", "col");
-            //    }
-
-            //    for (int i = 0; i < rowHeader; i++) {
-            //        TableRow r = new TableRow();
-            //        for (int k = 0; i < rowHeader; k++)
-            //        {
-            //            TableCell c = new TableCell();
-            //            if (k == 0) {
-            //                c.Controls.Add(new LiteralControl(j + 1.ToString()));
-            //                c.Font.Bold.ToString();
-            //            }
-            //            else if (k == 1) c.Controls.Add(new LiteralControl("Nombre de la persona"));
-            //            else if (k == 2) c.Controls.Add(new LiteralControl("10000"));
-            //            else c.Controls.Add(new LiteralControl("90h"));
-            //            r.Controls.Add(c);
-            //        }
-            //        t.Rows.Add(r);
-            //    }
-
-            //    v_pills_list.Controls.Add(t);
-            //    v_pills_list.Attributes["id"] = string.Format("v_pills_{0}", j.ToString());
-            //    v_pills_list.Attributes["role"] = "tabpanel";
-            //    v_pills_list.Attributes["aria-labelledby"] = string.Format("v_pills_{0}_tab", j.ToString());
-            //}
-        }   
+            Fill_People_Pills_Info();
+        }
 
         private void Fill_Table_Agents()
         {
@@ -120,7 +81,8 @@ namespace Proyecto2IAweb
             }
         }
 
-        private void Fill_People_Pills() {
+        private void Fill_People_Pills()
+        {
             int totalPeople = 5;
             for (int i = 0; i < totalPeople; i++)
             {
@@ -134,7 +96,7 @@ namespace Proyecto2IAweb
                 }
                 h.Attributes["data-toggle"] = "pill";
                 h.Attributes["href"] = string.Format("#v_pills_{0}", i.ToString());
-                h.Attributes["id"]= string.Format("v_pills_{0}_tab", i.ToString()); 
+                h.Attributes["id"] = string.Format("v_pills_{0}_tab", i.ToString());
                 h.Attributes["role"] = "tab";
                 h.Attributes["aria-controls"] = string.Format("v_pill_{0}", i.ToString());
                 h.Controls.Add(new LiteralControl(string.Format("Persona {0}", i.ToString())));
@@ -142,23 +104,89 @@ namespace Proyecto2IAweb
             }
         }
 
-        //private void Fill_People_Pills_Services() {
-        //    int totalServices = 3;
-            
-        //    for (int i = 1; i <= totalServices; i++) {
-        //        ListItem id = new ListItem();
-        //        id.Text = string.Format("ID: {0}", (i-1).ToString());
-        //        ListItem servicio = new ListItem();
-        //        servicio.Text = string.Format("Código de Servicio: {0}-SER", i.ToString());
-        //        ListItem horas = new ListItem();
-        //        horas.Text = string.Format("Horas de atención: {0}", (i*5).ToString());
-        //        ListItem comision = new ListItem();
-        //        comision.Text = string.Format("Comisión: {0}", (i*150).ToString());
-        //        BuLS.Items.Add(id);
-        //        BuLS.Items.Add(servicio);
-        //        BuLS.Items.Add(horas);
-        //        BuLS.Items.Add(comision);
-        //    }
-        //}
+        private void Fill_People_Pills_Info()
+        {
+            int total = 5;
+            for (int i = 0; i < total; i++)
+            {
+                Panel p = new Panel();
+                p.Attributes["class"] = "tab-pane fade";
+                if (i == 0)
+                {
+                    p.Attributes["CssClass"] += " show active";
+                }
+                p.Attributes["role"] = "tabpanel";
+                p.Attributes["aria-labelletdby"] = string.Format("v_pills_{0}_tab", (i + 1).ToString());
+                p.Attributes["id"] = string.Format("v_pills_{0}", i.ToString());
+                Table t = new Table();
+                t.Attributes["class"] = "table table-borderless";
+                TableHeaderRow thr = new TableHeaderRow();
+                TableRow r = new TableRow();
+                for (int j = 0; j < 4; j++)
+                {
+                    TableCell c = new TableCell();
+                    TableHeaderCell thc = new TableHeaderCell();
+                    thc.Attributes["scope"] = "col";
+                    if (j == 0)
+                    {
+                        thc.Controls.Add(new LiteralControl("ID"));
+                        c.Controls.Add(new LiteralControl(j.ToString()));
+                        c.Attributes["scope"] = "row";
+                    }
+                    else if (j == 1)
+                    {
+                        thc.Controls.Add(new LiteralControl("Nombre"));
+                        c.Controls.Add(new LiteralControl("Nombre Persona"));
+                    }
+                    else if (j == 2)
+                    {
+                        thc.Controls.Add(new LiteralControl("Total de Comisión"));
+                        c.Controls.Add(new LiteralControl("10000"));
+                    }
+                    else
+                    {
+                        thc.Controls.Add(new LiteralControl("Total de Horas de Atención"));
+                        c.Controls.Add(new LiteralControl("90"));
+                    }
+                    thr.Controls.Add(thc);
+                    r.Controls.Add(c);
+                }
+                t.Controls.Add(thr);
+                t.Controls.Add(r);
+                p.Controls.Add(t);
+
+                var l1 = new HtmlGenericControl("h3");
+                l1.InnerHtml = "Servicios";
+                p.Controls.Add(l1);
+
+                HtmlGenericControl unlist = new HtmlGenericControl("ul");
+                
+                int totalServices = 3;
+                for (int j = 0; j < totalServices; j++) {
+                    HtmlGenericControl list = new HtmlGenericControl("li");
+                    list.Attributes["class"] = "list-group-item";
+                    HtmlGenericControl panelList = new HtmlGenericControl("div");
+                    panelList.Attributes["class"] = "container";
+
+                    HtmlGenericControl id = new HtmlGenericControl("p");
+                    id.InnerHtml = "<strong>ID :</strong> 1";
+                    panelList.Controls.Add(id);
+                    HtmlGenericControl ser = new HtmlGenericControl("p");
+                    ser.InnerHtml = "<strong>Código de Servicio :</strong> ABCD";
+                    panelList.Controls.Add(ser);
+                    HtmlGenericControl hor = new HtmlGenericControl("p");
+                    hor.InnerHtml = "<strong>Horas de atención :</strong> 90";
+                    panelList.Controls.Add(hor);
+                    HtmlGenericControl com = new HtmlGenericControl("p");
+                    com.InnerHtml = "<strong>Comisión :</strong> 10000";
+                    panelList.Controls.Add(com);
+                    list.Controls.Add(panelList);
+                    unlist.Controls.Add(list);
+                }
+                p.Controls.Add(unlist);
+
+                v_pills_tabContent.Controls.Add(p);
+            }
+        }
     }
 }
