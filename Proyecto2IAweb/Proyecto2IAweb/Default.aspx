@@ -4,9 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Distribucion de reparaciones</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -14,48 +14,27 @@
 </head>
 <body>
     <form id="form1" runat="server">
-          <div class="container">
-
-            <h1 class="text-center" style="background-color:mediumblue; color:white;">Distribución de reparaciones</h1><br />
-            <div  class="input-group mb-3 text-center">
+        <div class="container">
+            <h1 class="text-center" style="background-color: mediumblue; color: white;">Distribución de reparaciones</h1>
+            <br />
+            <div class="input-group mb-3 text-center">
                 <label>Seleccione la lista de agentes de servicio</label>
-                <asp:FileUpload ID="FileUpload1" runat="server" />   
-                <asp:Button ID="Button1" runat="server" Text="Cargar" class="btn btn-primary btn-lg" />
+                <asp:FileUpload ID="FileUpload1" runat="server" />
+                <asp:Button ID="Button1" runat="server" Text="Cargar" CssClass="btn btn-primary btn-md" OnClick="Button1_Click" />
             </div>
-
         </div>
         <br />
-        <div class="container" >
+        <div class="container">
             <h2 class="text-center">Agentes</h2>
             <span>1-0 de 50</span>
-            <table class="table" ID="ServiceAgents" runat="server">
-              <caption class="text-center">Agentes de servicio</caption>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nombre de agente</th>
-                  <th scope="col">Codigos que atiende</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                </tr>
-              </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
+            <asp:Table CssClass="table text-center" ID="Table1" Caption="Agentes de servicio" runat="server">
+                <asp:TableHeaderRow CssClass="thead-dark">
+                    <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
+                    <asp:TableHeaderCell Scope="Column">Nombre de Agente</asp:TableHeaderCell>
+                    <asp:TableHeaderCell Scope="Column">Códigos que atiende</asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
+            <%--<nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Previous">
@@ -71,40 +50,21 @@
                   </a>
                 </li>
               </ul>
-            </nav>
+            </nav>--%>
         </div>
-        <br /><br />
+        <br />
+        <br />
         <div class="container">
             <h2 class="text-center">Servicios</h2>
             <span>1-0 de 50</span>
-            <table class="table" ID="ServiceOrders" runat="server">
-              <caption class="text-center">Ordenes de servicio</caption>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nombre de cliente</th>
-                  <th scope="col">Codigos de servicio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                </tr>
-              </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
+            <asp:Table CssClass="table text-center" ID="Table2" Caption="Ordenes de Servicio" runat="server">
+                <asp:TableHeaderRow CssClass="thead-dark">
+                    <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
+                    <asp:TableHeaderCell Scope="Column">Nombre de Cliente</asp:TableHeaderCell>
+                    <asp:TableHeaderCell Scope="Column">Códigos de Servicio</asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
+            <%--<nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Previous">
@@ -120,44 +80,45 @@
                   </a>
                 </li>
               </ul>
-            </nav>
-        </div><br />
+            </nav>--%>
+        </div>
+        <br />
         <div class="container">
             <h2 class="text-center">Distribución final</h2>
-            <div class="row" >
-                  <div class="col-3">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Persona 1</a>
-                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Persona 2</a>
-                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Persona 3</a>
-                      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Persona 4</a>
+            <div class="row">
+                <div class="col-3">
+                    <div class="nav flex-column nav-pills" id="v_pills_tab" role="tablist" aria-orientation="vertical">
+                        <asp:Repeater ID="Repeater1" runat="server">
+                            <ItemTemplate>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </div>
-                  </div>
-                  <div class="col-9">
+                </div>
+                <div class="col-9">
                     <div class="tab-content" id="v-pills-tabContent">
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-                          <table class="table table-borderless">
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Total de comisión</th>
-                              <th scope="col">Total de horas de atención</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>100000</td>
-                              <td>30</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                         <h3>Servicios</h3>
-                          <ul class="list-group list-group-flush">
-                              <li class="list-group-item">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Total de comisión</th>
+                                        <th scope="col">Total de horas de atención</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>100000</td>
+                                        <td>30</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3>Servicios</h3>
+                            <ul>
+                                <li class="list-group-item">
                                   <div class="container">
                                       <p><strong>ID : </strong>1</p>
                                       <p><strong>Código de servicio : </strong>ABCD</p>
@@ -182,171 +143,170 @@
                                   </div>
                               </li>
                             </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                          
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-                          <table class="table table-borderless">
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Total de comisión</th>
-                              <th scope="col">Total de horas de atención</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>100000</td>
-                              <td>30</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                         <h3>Servicios</h3>
-                          <ul class="list-group list-group-flush">
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                            </ul>
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                      </div>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Total de comisión</th>
+                                            <th scope="col">Total de horas de atención</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>100000</td>
+                                            <td>30</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h3>Servicios</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                </ul>
 
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                         
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-                          <table class="table table-borderless">
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Total de comisión</th>
-                              <th scope="col">Total de horas de atención</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>100000</td>
-                              <td>30</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                         <h3>Servicios</h3>
-                          <ul class="list-group list-group-flush">
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                            </ul>
+                            </div>
 
-                      </div>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
 
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                          
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-              
-                          <table class="table table-borderless">
-                          <thead>
-                            <tr>
-                              <th scope="col">ID</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Total de comisión</th>
-                              <th scope="col">Total de horas de atención</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
-                              <td>100000</td>
-                              <td>30</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                         <h3>Servicios</h3>
-                          <ul class="list-group list-group-flush">
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                              <li class="list-group-item">
-                                  <div class="container">
-                                      <p><strong>ID : </strong>1</p>
-                                      <p><strong>Código de servicio : </strong>ABCD</p>
-                                      <p><strong>Horas de atención : </strong>10</p>
-                                      <p><strong>Comisión : </strong>10000</p>
-                                  </div>
-                              </li>
-                            </ul>
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
-                      </div>
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Total de comisión</th>
+                                            <th scope="col">Total de horas de atención</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>100000</td>
+                                            <td>30</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h3>Servicios</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                </ul>
 
-                      </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Total de comisión</th>
+                                            <th scope="col">Total de horas de atención</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>100000</td>
+                                            <td>30</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <h3>Servicios</h3>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="container">
+                                            <p><strong>ID : </strong>1</p>
+                                            <p><strong>Código de servicio : </strong>ABCD</p>
+                                            <p><strong>Horas de atención : </strong>10</p>
+                                            <p><strong>Comisión : </strong>10000</p>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
+        </div>
     </form>
 </body>
 </html>
