@@ -5,14 +5,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
+using System.Xml;
 
 namespace Proyecto2IAweb
 {
     public partial class Default : System.Web.UI.Page
     {
+
+        private Algorithm algol;  
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Dictionary<string, Service> services = load_services();
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -21,6 +25,11 @@ namespace Proyecto2IAweb
             Fill_Table_Services();
             Fill_People_Pills();
             Fill_People_Pills_Info();
+            //Debug.Print(getFile());
+            parseXML(getFile());
+
+            //Dictionary<int, Agent> agents = load_agents(getFile());
+            //Dictionary<int, Order> orders = load_orders(getFile());
         }
 
         private void Fill_Table_Agents()
@@ -188,5 +197,148 @@ namespace Proyecto2IAweb
                 v_pills_tabContent.Controls.Add(p);
             }
         }
+
+        private const string services_xml = @"C:\Users\Luis Pablo Monge\Cursos\2019\I semestre\IA\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        private const string path = @"C:\Users\Luis Pablo Monge\Cursos\2019\I semestre\IA\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+
+        private Dictionary<string, Service> load_services()
+        {
+            Dictionary<string, Service> services = new Dictionary<string, Service>();
+
+            XmlDocument xml = new XmlDocument();
+            xml.Load(services_xml);
+
+            var tasks = xml["Services"];
+
+            foreach (XmlNode node in tasks)
+            {
+                Service service = new Service();
+                foreach (XmlNode child_node in node.ChildNodes)
+                {
+                    switch (child_node.Name)
+                    {
+                        case "code":
+                            service.Code = child_node.FirstChild.Value;
+                            break;
+                        case "description":
+                            service.Description = child_node.FirstChild.Value;
+                            break;
+                        case "duration":
+                            service.Duration = Int32.Parse(child_node.FirstChild.Value);
+                            break;
+                        case "commission":
+                            service.Commission = Int32.Parse(child_node.FirstChild.Value);
+                            break;
+                        default:
+                            Debug.Print("Invalid element in service xml");
+                            break;
+                    }
+                }
+
+                if (service.Code != null) services.Add(service.Code, service);
+            }
+
+            return services;
+        }
+
+        private string getFile()
+        {
+            string filePath = "";
+            if (FileUpload1.HasFile)
+            {
+                filePath = path + FileUpload1.FileName;
+                FileUpload1.SaveAs(filePath);
+            }
+            return filePath;
+        }
+
+        private Dictionary<int, Agent> load_agents(XmlDocument xml)
+        {
+            Dictionary<int, Agent> agents = new Dictionary<int, Agent>();
+
+            var agentsXML = xml["agents"];
+
+            foreach (XmlNode agentXML in agentsXML)
+            {
+                Agent agent = new Agent();
+                foreach (XmlNode agentXML_node in agentXML.ChildNodes)
+                {
+                    switch (agentXML_node.Name)
+                    {
+                        case "ID":
+                            agent.ID = Int32.Parse(agentXML_node.FirstChild.Value);
+                            break;
+                        case "name":
+                            agent.Name = agentXML_node.FirstChild.Value;
+                            break;
+                        case "services":
+                            foreach (XmlNode service in agentXML_node.ChildNodes)
+                            {
+                                agent.addService(service.FirstChild.Value);
+                            }
+                            break;
+                        default:
+                            Debug.Print("Invalid element in service xml");
+                            break;
+                    }
+                }
+
+                if (agent.Name != null) agents.Add(agent.ID, agent);
+            }
+
+            return agents;
+        }
+
+        private Dictionary<int, Order> load_orders(XmlDocument xml)
+        {
+            Dictionary<int, Order> orders = new Dictionary<int, Order>();
+
+            var ordersXML = xml["orders"];
+
+            foreach (XmlNode orderXML in ordersXML)
+            {
+                Order order = new Order();
+                foreach (XmlNode orderXML_node in orderXML.ChildNodes)
+                {
+                    switch (orderXML_node.Name)
+                    {
+                        case "ID":
+                            order.ID = Int32.Parse(orderXML_node.FirstChild.Value);
+                            break;
+                        case "client":
+                            order.Name = orderXML_node.FirstChild.Value;
+                            break;
+                        case "service":
+                            order.ServiceCode = orderXML_node.FirstChild.Value;
+                            break;
+                        default:
+                            Debug.Print("Invalid element in service xml");
+                            break;
+                    }
+                }
+
+                if (order.Name != null) orders.Add(order.ID, order);
+            }
+
+            return orders;
+        }
+
+        private void parseXML(string file)
+        {
+            //Dictionary<int, Order> orders = new Dictionary<int, Order>();
+
+            XmlDocument xml = new XmlDocument();
+            xml.Load(file);
+            if(xml.SelectSingleNode("agents") != null)
+            {
+                load_agents(xml);
+            }
+            else
+            {
+                load_orders(xml);
+            }
+        }
+
+        
     }
 }

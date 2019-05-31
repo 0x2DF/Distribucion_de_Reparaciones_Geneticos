@@ -18,5 +18,7 @@ namespace Proyecto2IAweb
             this.Name = name;
             this.ServiceCode = serviceCode;
         }
+
+        public Order() { }
     }
 }

@@ -27,6 +27,8 @@ namespace Proyecto2IAweb
             this.Name = name;
         }
 
+        public Agent() { }
+
         public void addService(string service_code)
         {
             bool found = false;
