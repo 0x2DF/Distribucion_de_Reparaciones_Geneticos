@@ -13,10 +13,13 @@ namespace Proyecto2IAweb
     public partial class Default : System.Web.UI.Page
     {
 
-        private Algorithm algol;  
+        private Algorithm algol;
+        private Dictionary<string, Service> services = null;
+        private Dictionary<int, Agent> agents = null;
+        private Dictionary<int, Order> orders = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Dictionary<string, Service> services = load_services();
+            services = load_services();
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -28,8 +31,10 @@ namespace Proyecto2IAweb
             //Debug.Print(getFile());
             parseXML(getFile());
 
-            //Dictionary<int, Agent> agents = load_agents(getFile());
-            //Dictionary<int, Order> orders = load_orders(getFile());
+            if(agents != null && orders != null)
+            {
+                Debug.Print("llamar al algoritmo");
+            }
         }
 
         private void Fill_Table_Agents()
@@ -331,11 +336,11 @@ namespace Proyecto2IAweb
             xml.Load(file);
             if(xml.SelectSingleNode("agents") != null)
             {
-                load_agents(xml);
+                agents = load_agents(xml);
             }
             else
             {
-                load_orders(xml);
+                orders = load_orders(xml);
             }
         }
 
