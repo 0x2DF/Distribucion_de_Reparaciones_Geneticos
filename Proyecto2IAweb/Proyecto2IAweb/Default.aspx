@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Distribucion de reparaciones</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="Style.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -26,13 +27,15 @@
         <br />
         <div class="container">
             <h2 class="text-center">Agentes</h2>
-            <asp:Table CssClass="table text-center" ID="Table1" Caption="Agentes de servicio" runat="server">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <asp:Table CssClass="table text-center table-striped" ID="Table1" Caption="Agentes de servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
                     <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
                     <asp:TableHeaderCell Scope="Column">Nombre de Agente</asp:TableHeaderCell>
                     <asp:TableHeaderCell Scope="Column">Códigos que atiende</asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
+            </div>
             <%--<nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">
@@ -55,13 +58,15 @@
         <br />
         <div class="container">
             <h2 class="text-center">Ordenes de Servicio</h2>
-            <asp:Table CssClass="table text-center" ID="Table2" Caption="Ordenes de Servicio" runat="server">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <asp:Table CssClass="table text-center table-responsive-lg" ID="Table2" Caption="Ordenes de Servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
                     <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
                     <asp:TableHeaderCell Scope="Column">Nombre de Cliente</asp:TableHeaderCell>
                     <asp:TableHeaderCell Scope="Column">Códigos de Servicio</asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
+            </div>
             <%--<nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">

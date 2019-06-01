@@ -36,7 +36,6 @@ namespace Proyecto2IAweb
         {
             //Debug.Print(getFile());
             parseXML(getFile());
-
             if (Session["agents"] != null && Session["orders"] != null)
             {
                 algol = new Algorithm(0, //Politic 
@@ -47,9 +46,9 @@ namespace Proyecto2IAweb
                     (Dictionary<string, Service>)(Session["services"]), //Services 
                     (Dictionary<int, Agent>)(Session["agents"]), //Agents
                     (Dictionary<int, Order>)(Session["orders"])); //Orders
-                //for (int i = 0; i < 70; i++) {
-                //    algol.NextGeneration();
-                //}
+                for (int i = 0; i < 70; i++) {
+                    algol.NextGeneration();
+                }
                 Fill_People_Pills();
                 Fill_People_Pills_Info();
             }
