@@ -15,13 +15,12 @@ namespace Proyecto2IAweb
     {
 
         private Algorithm algol;
-        private Dictionary<string, Service> services = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["services"] != null)
+            if(Session["services"] == null)
             {
-                services = load_services();
+                Session["services"] = load_services();
             }
             if (Session["orders"] != null)
             {
@@ -35,20 +34,42 @@ namespace Proyecto2IAweb
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Fill_People_Pills();
-            Fill_People_Pills_Info();
             //Debug.Print(getFile());
             parseXML(getFile());
 
             if (Session["agents"] != null && Session["orders"] != null)
             {
-                Debug.Print("llamar al algoritmo");
+                algol = new Algorithm(0, //Politic 
+                    3, //Crossings
+                    (float)0.009, //Mutation Probability
+                    10, //Population Size
+                    (float)0.5, //Cross Probability
+                    (Dictionary<string, Service>)(Session["services"]), //Services 
+                    (Dictionary<int, Agent>)(Session["agents"]), //Agents
+                    (Dictionary<int, Order>)(Session["orders"])); //Orders
+                //for (int i = 0; i < 70; i++) {
+                //    algol.NextGeneration();
+                //}
+                Fill_People_Pills();
+                Fill_People_Pills_Info();
             }
         }
 
         private void Fill_Table_Agents()
         {
+            Table1.Rows.Clear();
             int numcells = 3;
+            TableHeaderRow thr = new TableHeaderRow();
+            thr.Attributes["class"] = "thead-dark";
+            for (int i = 0; i < numcells; i++) {
+                TableHeaderCell thc = new TableHeaderCell();
+                thc.Attributes["scope"] = "col";
+                if (i == 0) thc.Controls.Add(new LiteralControl("ID"));
+                else if (i == 1) thc.Controls.Add(new LiteralControl("Nombre de Agente"));
+                else thc.Controls.Add(new LiteralControl("Códigos que Atiende"));
+                thr.Controls.Add(thc);
+            }
+            Table1.Controls.Add(thr);
             Dictionary<int, Agent> agents = (Dictionary<int, Agent>)(Session["agents"]);
             foreach (KeyValuePair<int, Agent> agent in agents)
             {
@@ -81,7 +102,20 @@ namespace Proyecto2IAweb
 
         private void Fill_Table_Ordens()
         {
+            Table2.Rows.Clear();
             int numcells = 3;
+            TableHeaderRow thr = new TableHeaderRow();
+            thr.Attributes["class"] = "thead-dark";
+            for (int i = 0; i < numcells; i++)
+            {
+                TableHeaderCell thc = new TableHeaderCell();
+                thc.Attributes["scope"] = "col";
+                if (i == 0) thc.Controls.Add(new LiteralControl("ID"));
+                else if (i == 1) thc.Controls.Add(new LiteralControl("Nombre de Cliente"));
+                else thc.Controls.Add(new LiteralControl("Códigos de Servicio"));
+                thr.Controls.Add(thc);
+            }
+            Table2.Controls.Add(thr);
             Dictionary<int, Order> ordenes = (Dictionary<int, Order>)(Session["orders"]);
             foreach (KeyValuePair<int, Order> order in ordenes) {
                 TableRow r = new TableRow();
@@ -347,13 +381,15 @@ namespace Proyecto2IAweb
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(file);
-            if(xml.SelectSingleNode("agents") != null)
+            if (xml.SelectSingleNode("agents") != null)
             {
+                Session.Remove("agents");
                 Session["agents"] = load_agents(xml);
                 Fill_Table_Agents();
             }
             else
             {
+                Session.Remove("orders");
                 Session["orders"] = load_orders(xml);
                 Fill_Table_Ordens();
             }
