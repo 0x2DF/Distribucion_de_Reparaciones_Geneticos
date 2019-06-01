@@ -7,7 +7,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using System.Xml;
-
+using System.IO;
 
 namespace Proyecto2IAweb
 {
@@ -345,17 +345,20 @@ namespace Proyecto2IAweb
 
         private void parseXML(string file)
         {
-            XmlDocument xml = new XmlDocument();
-            xml.Load(file);
-            if(xml.SelectSingleNode("agents") != null)
+            if (File.Exists(file))
             {
-                Session["agents"] = load_agents(xml);
-                Fill_Table_Agents();
-            }
-            else
-            {
-                Session["orders"] = load_orders(xml);
-                Fill_Table_Ordens();
+                XmlDocument xml = new XmlDocument();
+                xml.Load(file);
+                if (xml.SelectSingleNode("agents") != null)
+                {
+                    Session["agents"] = load_agents(xml);
+                    Fill_Table_Agents();
+                }
+                else
+                {
+                    Session["orders"] = load_orders(xml);
+                    Fill_Table_Ordens();
+                }
             }
         }
 
