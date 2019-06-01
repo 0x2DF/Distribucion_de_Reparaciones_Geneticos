@@ -51,6 +51,7 @@ namespace Proyecto2IAweb
             this.Orders = orders;
 
             fitnessPerGene = new List<float>(this.PopulationSize);
+            for (int i = 0; i < this.PopulationSize; i++) fitnessPerGene.Add(0);
 
             FillAgentsByService();
             GenerateRandomPopulation();
@@ -166,7 +167,7 @@ namespace Proyecto2IAweb
                 foreach (KeyValuePair<int, int> gene in Population[parentIndexA])
                 {
                     offspringA[gene.Key] = ( (flipped & 1) == 0 ? gene.Value : Population[parentIndexB][gene.Key] );
-                    offspringB[gene.Key] = ( (flipped & 1) == 1 ? gene.Value : Population[parentIndexB][gene.Key] );
+                    offspringB[gene.Key] = ( (flipped & 1) == 1 ? gene.Value : Population[parentIndexA][gene.Key] );
 
                     counter++;
                     if (counter >= interval)
@@ -182,6 +183,7 @@ namespace Proyecto2IAweb
 
         private Dictionary<int, int> Mutation(Dictionary<int, int> offspring)
         {
+            Dictionary<int, int> new_offspring = new Dictionary<int, int>();
             foreach (KeyValuePair<int, int> gene in offspring)
             {
                 if (random.Next(0, 1000) < (MutationProbability * 1000))
@@ -189,10 +191,25 @@ namespace Proyecto2IAweb
                     // Mutate gene
                     string serviceCode = Orders[gene.Value].ServiceCode;
 
-                    offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
+                    new_offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
                 }
             }
-            return offspring;
+            return new_offspring;
+        }
+
+        public Dictionary<int, int> BestChromosome()
+        {
+            float best = 0;
+            int index = -1;
+            for (int i = 0; i < this.PopulationSize; ++i)
+            {
+                if (fitnessPerGene[i] > best)
+                {
+                    best = fitnessPerGene[i];
+                    index = i;
+                }
+            }
+            return Population[index];
         }
 
         public void NextGeneration()

@@ -47,9 +47,10 @@ namespace Proyecto2IAweb
                     (Dictionary<string, Service>)(Session["services"]), //Services 
                     (Dictionary<int, Agent>)(Session["agents"]), //Agents
                     (Dictionary<int, Order>)(Session["orders"])); //Orders
-                //for (int i = 0; i < 70; i++) {
-                //    algol.NextGeneration();
-                //}
+                for (int i = 0; i < 70; i++)
+                {
+                    algol.NextGeneration();
+                }
                 Fill_People_Pills();
                 Fill_People_Pills_Info();
             }
@@ -252,8 +253,10 @@ namespace Proyecto2IAweb
 
         // LAS RUTAS SON ABSOLUTAS PORQUE NO ESTABA AGARRANDO LA RELATIVA
         // RECORDAR CAMBIARLAS
-        private const string services_xml = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
-        private const string path = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+        //private const string services_xml = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        //private const string path = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+        private const string services_xml = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        private const string path = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
 
         private Dictionary<string, Service> load_services()
         {
