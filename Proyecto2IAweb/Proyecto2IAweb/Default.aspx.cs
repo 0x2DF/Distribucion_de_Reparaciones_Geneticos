@@ -16,18 +16,25 @@ namespace Proyecto2IAweb
 
         private Algorithm algol;
         private Dictionary<string, Service> services = null;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(Session["services"] != null)
             {
                 services = load_services();
-            }    
+            }
+            if (Session["orders"] != null)
+            {
+                Fill_Table_Ordens();
+            }
+            if (Session["agents"] != null)
+            {
+                Fill_Table_Agents();
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Fill_Table_Agents();
-            Fill_Table_Services();
             Fill_People_Pills();
             Fill_People_Pills_Info();
             //Debug.Print(getFile());
@@ -41,9 +48,9 @@ namespace Proyecto2IAweb
 
         private void Fill_Table_Agents()
         {
-            int numrows = 3;
             int numcells = 3;
-            for (int i = 0; i < numrows; i++)
+            Dictionary<int, Agent> agents = (Dictionary<int, Agent>)(Session["agents"]);
+            foreach (KeyValuePair<int, Agent> agent in agents)
             {
                 TableRow r = new TableRow();
                 for (int j = 0; j < numcells; j++)
@@ -51,16 +58,20 @@ namespace Proyecto2IAweb
                     TableCell c = new TableCell();
                     if (j == 0)
                     {
-                        c.Controls.Add(new LiteralControl(j + 1.ToString()));
+                        c.Controls.Add(new LiteralControl(agent.Key.ToString()));
                         c.Font.Bold.ToString();
                     }
                     else if (j == 1)
                     {
-                        c.Controls.Add(new LiteralControl("Nombre de la persona"));
+                        c.Controls.Add(new LiteralControl(agent.Value.Name));
                     }
                     else
                     {
-                        c.Controls.Add(new LiteralControl("Cógido que atiendo xD"));
+                        string serviceCodes = "";
+                        for(int i = 0; i < agent.Value.ServiceCodes.Count; i++) {
+                            serviceCodes += string.Format("{0}\n", agent.Value.ServiceCodes[i]);
+                        }
+                        c.Controls.Add(new LiteralControl(serviceCodes));
                     }
                     r.Controls.Add(c);
                 }
@@ -68,28 +79,27 @@ namespace Proyecto2IAweb
             }
         }
 
-        private void Fill_Table_Services()
+        private void Fill_Table_Ordens()
         {
-            int numrows = 3;
             int numcells = 3;
-            for (int i = 0; i < numrows; i++)
-            {
+            Dictionary<int, Order> ordenes = (Dictionary<int, Order>)(Session["orders"]);
+            foreach (KeyValuePair<int, Order> order in ordenes) {
                 TableRow r = new TableRow();
                 for (int j = 0; j < numcells; j++)
                 {
                     TableCell c = new TableCell();
                     if (j == 0)
                     {
-                        c.Controls.Add(new LiteralControl(j + 1.ToString()));
+                        c.Controls.Add(new LiteralControl(order.Key.ToString()));
                         c.Font.Bold.ToString();
                     }
                     else if (j == 1)
                     {
-                        c.Controls.Add(new LiteralControl("Nombre de la persona"));
+                        c.Controls.Add(new LiteralControl(order.Value.Name));
                     }
                     else
                     {
-                        c.Controls.Add(new LiteralControl("Cógido que servicio"));
+                        c.Controls.Add(new LiteralControl(order.Value.ServiceCode));
                     }
                     r.Controls.Add(c);
                 }
@@ -205,8 +215,11 @@ namespace Proyecto2IAweb
             }
         }
 
-        private const string services_xml = @"C:\Users\Luis Pablo Monge\Cursos\2019\I semestre\IA\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
-        private const string path = @"C:\Users\Luis Pablo Monge\Cursos\2019\I semestre\IA\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+
+        // LAS RUTAS SON ABSOLUTAS PORQUE NO ESTABA AGARRANDO LA RELATIVA
+        // RECORDAR CAMBIARLAS
+        private const string services_xml = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        private const string path = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
 
         private Dictionary<string, Service> load_services()
         {
@@ -332,17 +345,17 @@ namespace Proyecto2IAweb
 
         private void parseXML(string file)
         {
-            //Dictionary<int, Order> orders = new Dictionary<int, Order>();
-
             XmlDocument xml = new XmlDocument();
             xml.Load(file);
             if(xml.SelectSingleNode("agents") != null)
             {
                 Session["agents"] = load_agents(xml);
+                Fill_Table_Agents();
             }
             else
             {
                 Session["orders"] = load_orders(xml);
+                Fill_Table_Ordens();
             }
         }
 

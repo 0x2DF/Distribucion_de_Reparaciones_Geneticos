@@ -55,7 +55,7 @@
         <br />
         <br />
         <div class="container">
-            <h2 class="text-center">Servicios</h2>
+            <h2 class="text-center">Ordenes de Servicio</h2>
             <span>1-0 de 50</span>
             <asp:Table CssClass="table text-center" ID="Table2" Caption="Ordenes de Servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
