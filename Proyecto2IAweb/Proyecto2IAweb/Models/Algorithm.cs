@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,6 @@ namespace Proyecto2IAweb
 
             fitnessPerGene = new List<float>(this.PopulationSize);
             for (int i = 0; i < this.PopulationSize; i++) fitnessPerGene.Add(0);
-
             FillAgentsByService();
             GenerateRandomPopulation();
 
@@ -195,21 +195,6 @@ namespace Proyecto2IAweb
                 }
             }
             return new_offspring;
-        }
-
-        public Dictionary<int, int> BestChromosome()
-        {
-            float best = 0;
-            int index = -1;
-            for (int i = 0; i < this.PopulationSize; ++i)
-            {
-                if (fitnessPerGene[i] > best)
-                {
-                    best = fitnessPerGene[i];
-                    index = i;
-                }
-            }
-            return Population[index];
         }
 
         public void NextGeneration()
