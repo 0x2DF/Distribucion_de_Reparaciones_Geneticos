@@ -26,7 +26,6 @@
         <br />
         <div class="container">
             <h2 class="text-center">Agentes</h2>
-            <span>1-0 de 50</span>
             <asp:Table CssClass="table text-center" ID="Table1" Caption="Agentes de servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
                     <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
@@ -56,7 +55,6 @@
         <br />
         <div class="container">
             <h2 class="text-center">Ordenes de Servicio</h2>
-            <span>1-0 de 50</span>
             <asp:Table CssClass="table text-center" ID="Table2" Caption="Ordenes de Servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
                     <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
