@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using System.Xml;
 
+
 namespace Proyecto2IAweb
 {
     public partial class Default : System.Web.UI.Page
@@ -15,11 +16,12 @@ namespace Proyecto2IAweb
 
         private Algorithm algol;
         private Dictionary<string, Service> services = null;
-        private Dictionary<int, Agent> agents = null;
-        private Dictionary<int, Order> orders = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            services = load_services();
+            if(Session["services"] != null)
+            {
+                services = load_services();
+            }    
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -31,7 +33,7 @@ namespace Proyecto2IAweb
             //Debug.Print(getFile());
             parseXML(getFile());
 
-            if(agents != null && orders != null)
+            if (Session["agents"] != null && Session["orders"] != null)
             {
                 Debug.Print("llamar al algoritmo");
             }
@@ -336,11 +338,11 @@ namespace Proyecto2IAweb
             xml.Load(file);
             if(xml.SelectSingleNode("agents") != null)
             {
-                agents = load_agents(xml);
+                Session["agents"] = load_agents(xml);
             }
             else
             {
-                orders = load_orders(xml);
+                Session["orders"] = load_orders(xml);
             }
         }
 
