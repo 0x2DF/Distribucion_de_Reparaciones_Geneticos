@@ -57,7 +57,7 @@ namespace Proyecto2IAweb
             GenerateRandomPopulation();
 
             Politics.Add(new Random("Al Azar"));
-            Politics.Add(new FortuneWheel("Rueda de la fortuna"));
+            Politics.Add(new FortuneWheel("Rueda de la fortuna", 50)); // K spins
             Politics.Add(new Tourney("Torneo"));
             
         }
@@ -220,7 +220,6 @@ namespace Proyecto2IAweb
                 this.fitnessPerGene[i] = Fitness(i);
 
                 if (this.fitnessPerGene[i] < this.fitnessPerGene[bestFitnessIndex]) bestFitnessIndex = i;
-                else bestFitnessIndex = i;
             }
 
             List<Dictionary<int, int>> offsprings = new List<Dictionary<int, int>>();
@@ -240,7 +239,7 @@ namespace Proyecto2IAweb
             offsprings.Add(Population[bestFitnessIndex]);
 
             // Replace population
-            Population = offsprings;
+            this.Population = offsprings;
         }
     }
 }

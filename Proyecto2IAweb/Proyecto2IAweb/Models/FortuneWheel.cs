@@ -8,21 +8,38 @@ namespace Proyecto2IAweb
 {
     class FortuneWheel : Politic
     {
-        public FortuneWheel(string name) : base(name)
-        {
+        private int Spins { get; set; }
 
+        public FortuneWheel(string name, int spins) : base(name)
+        {
+            this.Spins = spins;
         }
         public override Tuple<int, int> Selection(List<float> fitness)
         {
             if (fitness.Count() <= 1) return Tuple.Create<int, int>(0, 0);
 
-            int parentIndexA = random.Next(0, fitness.Count() - 1);
-            int parentIndexB = random.Next(0, fitness.Count() - 1);
-            while (parentIndexB == parentIndexA)
+            List<Tuple<int, float>> entries = new List<Tuple<int, float>>();
+            for (int i = 0; i < fitness.Count; ++i)
             {
-                parentIndexB = random.Next(0, fitness.Count() - 1);
+                entries.Add(Tuple.Create<int, float>(i, fitness[i]));
             }
+
+            List<Tuple<int, float>> entriesA = new List<Tuple<int, float>>(entries);
+            int parentIndexA = SpinWheel(entriesA);
+
+            int parentIndexB;
+            do
+            {
+                List<Tuple<int, float>> entriesB = new List<Tuple<int, float>>(entries);
+                parentIndexB = SpinWheel(entriesB);
+            } while (parentIndexB == parentIndexA);
+
             return Tuple.Create<int, int>(parentIndexA, parentIndexB);
+        }
+
+        private int SpinWheel(List<Tuple<int, float>> entries)
+        {
+            return 0;
         }
     }
 }
