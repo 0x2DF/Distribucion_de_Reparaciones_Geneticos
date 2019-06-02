@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Proyecto2IAweb
 {
@@ -23,7 +24,7 @@ namespace Proyecto2IAweb
             {
                 contestants.Add(Tuple.Create<int, float>(i, fitness[i]));
             }
-
+            
             List<Tuple<int, float>> contestantsA = new List<Tuple<int, float>>(contestants);
             int parentIndexA = GetWinner(contestantsA);
 
