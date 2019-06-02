@@ -167,7 +167,7 @@ namespace Proyecto2IAweb
                 foreach (KeyValuePair<int, int> gene in Population[parentIndexA])
                 {
                     offspringA[gene.Key] = ( (flipped & 1) == 0 ? gene.Value : Population[parentIndexB][gene.Key] );
-                    offspringB[gene.Key] = ( (flipped & 1) == 1 ? gene.Value : Population[parentIndexA][gene.Key] );
+                    offspringB[gene.Key] = ( (flipped & 1) == 1 ? gene.Value : Population[parentIndexB][gene.Key] );
 
                     counter++;
                     if (counter >= interval)
@@ -192,24 +192,34 @@ namespace Proyecto2IAweb
                     string serviceCode = Orders[gene.Value].ServiceCode;
 
                     new_offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
+                } else
+                {
+                    new_offspring[gene.Key] = gene.Value;
                 }
             }
             return new_offspring;
         }
 
+        public Dictionary<int, int> BestChromosome()
+        {
+            int bestindex = 0;
+            for (int i = 1; i < this.PopulationSize; ++i)
+            {
+                if (fitnessPerGene[bestindex] > fitnessPerGene[i]) bestindex = i;
+            }
+            return Population[bestindex];
+        }
+
         public void NextGeneration()
         {
-            int bestFitnessIndex = -1;
+            int bestFitnessIndex = 0;
 
             // Recalculate fitness for every chromosome
-            for (int i = 0; i < PopulationSize; ++i)
+            for (int i = 0; i < this.PopulationSize; ++i)
             {
-                fitnessPerGene[i] = Fitness(i);
+                this.fitnessPerGene[i] = Fitness(i);
 
-                if (bestFitnessIndex != -1)
-                {
-                    if (fitnessPerGene[i] < fitnessPerGene[bestFitnessIndex]) bestFitnessIndex = i;
-                }
+                if (this.fitnessPerGene[i] < this.fitnessPerGene[bestFitnessIndex]) bestFitnessIndex = i;
                 else bestFitnessIndex = i;
             }
 
