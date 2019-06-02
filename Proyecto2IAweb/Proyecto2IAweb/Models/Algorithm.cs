@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,12 +52,12 @@ namespace Proyecto2IAweb
             this.Orders = orders;
 
             fitnessPerGene = new List<float>(this.PopulationSize);
-
+            for (int i = 0; i < this.PopulationSize; i++) fitnessPerGene.Add(0);
             FillAgentsByService();
             GenerateRandomPopulation();
 
             Politics.Add(new Random("Al Azar"));
-            Politics.Add(new FortuneWheel("Rueda de la fortuna"));
+            Politics.Add(new FortuneWheel("Rueda de la fortuna", 100)); // K spins
             Politics.Add(new Tourney("Torneo"));
             
         }
@@ -182,6 +183,7 @@ namespace Proyecto2IAweb
 
         private Dictionary<int, int> Mutation(Dictionary<int, int> offspring)
         {
+            Dictionary<int, int> new_offspring = new Dictionary<int, int>();
             foreach (KeyValuePair<int, int> gene in offspring)
             {
                 if (random.Next(0, 1000) < (MutationProbability * 1000))
@@ -189,26 +191,35 @@ namespace Proyecto2IAweb
                     // Mutate gene
                     string serviceCode = Orders[gene.Value].ServiceCode;
 
-                    offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
+                    new_offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
+                } else
+                {
+                    new_offspring[gene.Key] = gene.Value;
                 }
             }
-            return offspring;
+            return new_offspring;
+        }
+
+        public Dictionary<int, int> BestChromosome()
+        {
+            int bestindex = 0;
+            for (int i = 1; i < this.PopulationSize; ++i)
+            {
+                if (fitnessPerGene[bestindex] > fitnessPerGene[i]) bestindex = i;
+            }
+            return Population[bestindex];
         }
 
         public void NextGeneration()
         {
-            int bestFitnessIndex = -1;
+            int bestFitnessIndex = 0;
 
             // Recalculate fitness for every chromosome
-            for (int i = 0; i < PopulationSize; ++i)
+            for (int i = 0; i < this.PopulationSize; ++i)
             {
-                fitnessPerGene[i] = Fitness(i);
+                this.fitnessPerGene[i] = Fitness(i);
 
-                if (bestFitnessIndex != -1)
-                {
-                    if (fitnessPerGene[i] < fitnessPerGene[bestFitnessIndex]) bestFitnessIndex = i;
-                }
-                else bestFitnessIndex = i;
+                if (this.fitnessPerGene[i] < this.fitnessPerGene[bestFitnessIndex]) bestFitnessIndex = i;
             }
 
             List<Dictionary<int, int>> offsprings = new List<Dictionary<int, int>>();
@@ -217,18 +228,19 @@ namespace Proyecto2IAweb
             // Every pair of parents => two offspring
             for (int i = 0; i < (PopulationSize - 1); i+=2)
             {
-                Tuple<int, int> parents = Politics[Politic].Selection(fitnessPerGene);
                 
+                Tuple<int, int> parents = Politics[Politic].Selection(fitnessPerGene);
                 Tuple<Dictionary<int, int>, Dictionary<int, int> > offspring = Crossover(parents.Item1, parents.Item2);
-
+                
                 offsprings.Add(Mutation(offspring.Item1));
                 offsprings.Add(Mutation(offspring.Item2));
             }
+
             // Keep previous best chromosome
             offsprings.Add(Population[bestFitnessIndex]);
 
             // Replace population
-            Population = offsprings;
+            this.Population = offsprings;
         }
     }
 }

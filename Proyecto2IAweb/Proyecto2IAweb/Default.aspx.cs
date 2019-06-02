@@ -36,20 +36,20 @@ namespace Proyecto2IAweb
         {
             //Debug.Print(getFile());
             parseXML(getFile());
-
             if (Session["agents"] != null && Session["orders"] != null)
             {
-                algol = new Algorithm(0, //Politic 
-                    3, //Crossings
-                    (float)0.009, //Mutation Probability
-                    10, //Population Size
+                algol = new Algorithm(1, //Politic (0 : random, 1 : fortune wheel, 2 : tourney
+                    5, //Crossings
+                    (float)0.01, //Mutation Probability
+                    50, //Population Size
                     (float)0.5, //Cross Probability
                     (Dictionary<string, Service>)(Session["services"]), //Services 
                     (Dictionary<int, Agent>)(Session["agents"]), //Agents
                     (Dictionary<int, Order>)(Session["orders"])); //Orders
-                //for (int i = 0; i < 70; i++) {
-                //    algol.NextGeneration();
-                //}
+                for (int i = 0; i < 100; i++) {
+                    algol.NextGeneration();
+                }
+                Dictionary<int, int> pairing = algol.BestChromosome();
                 Fill_People_Pills();
                 Fill_People_Pills_Info();
             }
