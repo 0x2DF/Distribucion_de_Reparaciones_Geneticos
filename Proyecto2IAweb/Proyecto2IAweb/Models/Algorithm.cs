@@ -189,12 +189,12 @@ namespace Proyecto2IAweb
                 if (random.Next(0, 1000) < (MutationProbability * 1000))
                 {
                     // Mutate gene
-                    string serviceCode = Orders[gene.Value].ServiceCode;
+                    string serviceCode = Orders[gene.Key].ServiceCode;
 
                     new_offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
                 } else
                 {
-                    new_offspring[gene.Key] = gene.Value;
+                    new_offspring[gene.Key] = gene.Key;
                 }
             }
             return new_offspring;
