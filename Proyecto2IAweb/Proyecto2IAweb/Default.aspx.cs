@@ -50,8 +50,17 @@ namespace Proyecto2IAweb
                     algol.NextGeneration();
                 }
                 Dictionary<int, int> pairing = algol.BestChromosome();
-                Fill_People_Pills();
-                Fill_People_Pills_Info();
+                Dictionary<int, List<int>> agentsByOrders = new Dictionary<int, List<int>>();
+                foreach (KeyValuePair<int, int> order in pairing)
+                {
+                    if (!agentsByOrders.ContainsKey(order.Value))
+                    {
+                        agentsByOrders.Add(order.Value, new List<int>());
+                    }
+                    agentsByOrders[order.Value].Add(order.Key);
+                }
+                Fill_People_Pills(agentsByOrders);
+                Fill_People_Pills_Info(agentsByOrders, (Dictionary<int,Agent>)Session["agents"], (Dictionary<int,Order>)Session["orders"], (Dictionary<string, Service>)Session["services"]);
             }
         }
 
@@ -141,10 +150,9 @@ namespace Proyecto2IAweb
             }
         }
 
-        private void Fill_People_Pills()
+        private void Fill_People_Pills(Dictionary<int, List<int>> agentsByOrders)
         {
-            int totalPeople = 5;
-            for (int i = 0; i < totalPeople; i++)
+            for (int i = 0; i < agentsByOrders.Count; i++)
             {
                 HyperLink h = new HyperLink();
                 h.CssClass = "nav-link";
@@ -155,19 +163,18 @@ namespace Proyecto2IAweb
                     h.Attributes["aria-selected"] = "true";
                 }
                 h.Attributes["data-toggle"] = "pill";
-                h.Attributes["href"] = string.Format("#v_pills_{0}", i.ToString());
-                h.Attributes["id"] = string.Format("v_pills_{0}_tab", i.ToString());
+                h.Attributes["href"] = string.Format("#v_pills_{0}", agentsByOrders.ElementAt(i).Key);
+                h.Attributes["id"] = string.Format("v_pills_{0}_tab", agentsByOrders.ElementAt(i).Key);
                 h.Attributes["role"] = "tab";
-                h.Attributes["aria-controls"] = string.Format("v_pill_{0}", i.ToString());
-                h.Controls.Add(new LiteralControl(string.Format("Persona {0}", i.ToString())));
+                h.Attributes["aria-controls"] = string.Format("v_pill_{0}", agentsByOrders.ElementAt(i).Key);
+                h.Controls.Add(new LiteralControl(string.Format("Persona ID: {0}", agentsByOrders.ElementAt(i).Key)));
                 Repeater1.Controls.Add(h);
             }
         }
 
-        private void Fill_People_Pills_Info()
+        private void Fill_People_Pills_Info(Dictionary<int, List<int>> agentsByOrders, Dictionary<int,Agent> agents, Dictionary<int,Order> orders, Dictionary<string, Service> services)
         {
-            int total = 5;
-            for (int i = 0; i < total; i++)
+            for (int i = 0; i < agentsByOrders.Count; i++)
             {
                 Panel p = new Panel();
                 p.Attributes["class"] = "tab-pane fade";
@@ -176,13 +183,20 @@ namespace Proyecto2IAweb
                     p.Attributes["CssClass"] += " show active";
                 }
                 p.Attributes["role"] = "tabpanel";
-                p.Attributes["aria-labelletdby"] = string.Format("v_pills_{0}_tab", (i + 1).ToString());
-                p.Attributes["id"] = string.Format("v_pills_{0}", i.ToString());
+                p.Attributes["aria-labelletdby"] = string.Format("v_pills_{0}_tab", agentsByOrders.ElementAt(i).Key);
+                p.Attributes["id"] = string.Format("v_pills_{0}", agentsByOrders.ElementAt(i).Key);
                 Table t = new Table();
                 t.Attributes["class"] = "table table-borderless";
                 TableHeaderRow thr = new TableHeaderRow();
                 TableRow r = new TableRow();
-                for (int j = 0; j < 4; j++)
+                int[] comisionAndHours = new int[2] {0,0};
+                for (int j = 0; j < agentsByOrders.ElementAt(i).Value.Count; j++)
+                {
+                    int orderID = agentsByOrders.ElementAt(i).Value[j];
+                    comisionAndHours[0] += services[orders[orderID].ServiceCode].Commission;
+                    comisionAndHours[1] += services[orders[orderID].ServiceCode].Duration;
+                }
+                    for (int j = 0; j < 4; j++)
                 {
                     TableCell c = new TableCell();
                     TableHeaderCell thc = new TableHeaderCell();
@@ -190,23 +204,23 @@ namespace Proyecto2IAweb
                     if (j == 0)
                     {
                         thc.Controls.Add(new LiteralControl("ID"));
-                        c.Controls.Add(new LiteralControl(j.ToString()));
+                        c.Controls.Add(new LiteralControl(agentsByOrders.ElementAt(i).Key.ToString()));
                         c.Attributes["scope"] = "row";
                     }
                     else if (j == 1)
                     {
                         thc.Controls.Add(new LiteralControl("Nombre"));
-                        c.Controls.Add(new LiteralControl("Nombre Persona"));
+                        c.Controls.Add(new LiteralControl(agents[agentsByOrders.ElementAt(i).Key].Name));
                     }
                     else if (j == 2)
                     {
                         thc.Controls.Add(new LiteralControl("Total de Comisión"));
-                        c.Controls.Add(new LiteralControl("10000"));
+                        c.Controls.Add(new LiteralControl(string.Format("{0}", comisionAndHours[0])));
                     }
                     else
                     {
                         thc.Controls.Add(new LiteralControl("Total de Horas de Atención"));
-                        c.Controls.Add(new LiteralControl("90"));
+                        c.Controls.Add(new LiteralControl(string.Format("{0}", comisionAndHours[1])));
                     }
                     thr.Controls.Add(thc);
                     r.Controls.Add(c);
@@ -221,24 +235,24 @@ namespace Proyecto2IAweb
 
                 HtmlGenericControl unlist = new HtmlGenericControl("ul");
                 
-                int totalServices = 3;
-                for (int j = 0; j < totalServices; j++) {
+                for (int j = 0; j < agentsByOrders.ElementAt(i).Value.Count; j++) {
+                    int orderID = agentsByOrders.ElementAt(i).Value[j];
                     HtmlGenericControl list = new HtmlGenericControl("li");
                     list.Attributes["class"] = "list-group-item";
                     HtmlGenericControl panelList = new HtmlGenericControl("div");
                     panelList.Attributes["class"] = "container";
 
                     HtmlGenericControl id = new HtmlGenericControl("p");
-                    id.InnerHtml = "<strong>ID :</strong> 1";
+                    id.InnerHtml = string.Format("<strong>ID :</strong> {0}", services[orders[orderID].ServiceCode].Code);
                     panelList.Controls.Add(id);
                     HtmlGenericControl ser = new HtmlGenericControl("p");
-                    ser.InnerHtml = "<strong>Código de Servicio :</strong> ABCD";
+                    ser.InnerHtml = string.Format("<strong>Código de Servicio :</strong> {0}", services[orders[orderID].ServiceCode].Description);
                     panelList.Controls.Add(ser);
                     HtmlGenericControl hor = new HtmlGenericControl("p");
-                    hor.InnerHtml = "<strong>Horas de atención :</strong> 90";
+                    hor.InnerHtml = string.Format("<strong>Horas de atención :</strong> {0}", services[orders[orderID].ServiceCode].Duration);
                     panelList.Controls.Add(hor);
                     HtmlGenericControl com = new HtmlGenericControl("p");
-                    com.InnerHtml = "<strong>Comisión :</strong> 10000";
+                    com.InnerHtml = string.Format("<strong>Comisión :</strong> {0}", services[orders[orderID].ServiceCode].Commission);
                     panelList.Controls.Add(com);
                     list.Controls.Add(panelList);
                     unlist.Controls.Add(list);
@@ -252,10 +266,10 @@ namespace Proyecto2IAweb
 
         // LAS RUTAS SON ABSOLUTAS PORQUE NO ESTABA AGARRANDO LA RELATIVA
         // RECORDAR CAMBIARLAS
-        // private const string services_xml = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
-        // private const string path = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
-        private const string services_xml = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
-        private const string path = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+        private const string services_xml = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        private const string path = @"C:\Users\papin\Desktop\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
+        //private const string services_xml = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\services.xml";
+        //private const string path = @"C:\Users\Carole\source\repos\Distribucion_de_Reparaciones_Geneticos\Proyecto2IAweb\Proyecto2IAweb\";
 
         private Dictionary<string, Service> load_services()
         {
