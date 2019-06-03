@@ -117,6 +117,16 @@ namespace Proyecto2IAweb
                                                                  Services[Orders[entry.Key].ServiceCode].Duration);
                 }
             }
+
+            // Lazy workers
+            foreach (KeyValuePair<int, Agent> agent in Agents)
+            {
+                if (!agentsRate.ContainsKey(agent.Key))
+                {
+                    agentsRate[agent.Key] = new Pair<int, int>(0, 0);
+                }
+            }
+
             return agentsRate;
         }
 
