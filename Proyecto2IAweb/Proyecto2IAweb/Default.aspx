@@ -16,12 +16,16 @@
 <body>
     <form id="form1" runat="server">
         <div class="container">
-            <h1 class="text-center" style="background-color: mediumblue; color: white;">Distribución de reparaciones</h1>
+            <h1 class="text-center bg-dark text-white ">Distribución de Reparaciones</h1>
             <br />
-            <div class="input-group mb-3 text-center">
-                <label>Seleccione la lista de agentes de servicio</label>
+            <div class="row input-group mb-3 text-center">
+                <div class="col-10">
+                    <label>Seleccione la lista de agentes de servicio</label>
                 <asp:FileUpload ID="FileUpload1" runat="server" />
-                <asp:Button ID="Button1" runat="server" Text="Cargar" CssClass="btn btn-primary btn-md" OnClick="Button1_Click" />
+                </div>
+                <div class="col-2">
+                    <asp:Button ID="Button1" runat="server" Text="Cargar" CssClass="btn btn-primary btn-md" OnClick="Button1_Click" />
+                </div>
             </div>
         </div>
         <br />
@@ -36,30 +40,13 @@
                 </asp:TableHeaderRow>
             </asp:Table>
             </div>
-            <%--<nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>--%>
         </div>
         <br />
         <br />
         <div class="container">
             <h2 class="text-center">Ordenes de Servicio</h2>
             <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <asp:Table CssClass="table text-center table-responsive-lg" ID="Table2" Caption="Ordenes de Servicio" runat="server">
+            <asp:Table CssClass="table text-center table-striped" ID="Table2" Caption="Ordenes de Servicio" runat="server">
                 <asp:TableHeaderRow CssClass="thead-dark">
                     <asp:TableHeaderCell Scope="Column">ID</asp:TableHeaderCell>
                     <asp:TableHeaderCell Scope="Column">Nombre de Cliente</asp:TableHeaderCell>
@@ -67,30 +54,13 @@
                 </asp:TableHeaderRow>
             </asp:Table>
             </div>
-            <%--<nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>--%>
         </div>
         <br />
         <div class="container">
             <h2 class="text-center">Distribución final</h2>
             <div class="row">
                 <div class="col-3">
-                    <div class="nav flex-column nav-pills" id="v_pills_tab" role="tablist" aria-orientation="vertical">
+                    <div class="nav flex-column nav-pills my-custom-scrollbar table-wrapper-scroll-y" id="v_pills_tab" role="tablist" aria-orientation="vertical">
                         <asp:Repeater ID="Repeater1" runat="server">
                             <ItemTemplate>
                             </ItemTemplate>

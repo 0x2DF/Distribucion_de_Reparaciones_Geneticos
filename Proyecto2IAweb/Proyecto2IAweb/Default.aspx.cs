@@ -38,7 +38,7 @@ namespace Proyecto2IAweb
             parseXML(getFile());
             if (Session["agents"] != null && Session["orders"] != null)
             {
-                algol = new Algorithm(1, //Politic (0 : random, 1 : fortune wheel, 2 : tourney
+                algol = new Algorithm(2, //Politic (0 : random, 1 : fortune wheel, 2 : tourney
                     5, //Crossings
                     (float)0.01, //Mutation Probability
                     50, //Population Size
@@ -188,6 +188,7 @@ namespace Proyecto2IAweb
                 Table t = new Table();
                 t.Attributes["class"] = "table table-borderless";
                 TableHeaderRow thr = new TableHeaderRow();
+                thr.Attributes["class"] = "thead-dark";
                 TableRow r = new TableRow();
                 int[] comisionAndHours = new int[2] {0,0};
                 for (int j = 0; j < agentsByOrders.ElementAt(i).Value.Count; j++)
@@ -233,6 +234,7 @@ namespace Proyecto2IAweb
                 l1.InnerHtml = "Servicios";
                 p.Controls.Add(l1);
 
+                HtmlGenericControl divider = new HtmlGenericControl("div");
                 HtmlGenericControl unlist = new HtmlGenericControl("ul");
                 
                 for (int j = 0; j < agentsByOrders.ElementAt(i).Value.Count; j++) {
@@ -257,7 +259,9 @@ namespace Proyecto2IAweb
                     list.Controls.Add(panelList);
                     unlist.Controls.Add(list);
                 }
-                p.Controls.Add(unlist);
+                divider.Controls.Add(unlist);
+                divider.Attributes["class"] = "my-custom-scrollbar table-wrapper-scroll-y";
+                p.Controls.Add(divider);
 
                 v_pills_tabContent.Controls.Add(p);
             }
