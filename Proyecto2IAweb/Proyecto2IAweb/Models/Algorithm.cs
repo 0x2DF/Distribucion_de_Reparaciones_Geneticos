@@ -57,7 +57,7 @@ namespace Proyecto2IAweb
             GenerateRandomPopulation();
 
             Politics.Add(new Random("Al Azar"));
-            Politics.Add(new FortuneWheel("Rueda de la fortuna", 50)); // K spins
+            Politics.Add(new FortuneWheel("Rueda de la fortuna", 100)); // K spins
             Politics.Add(new Tourney("Torneo"));
             
         }
@@ -228,13 +228,14 @@ namespace Proyecto2IAweb
             // Every pair of parents => two offspring
             for (int i = 0; i < (PopulationSize - 1); i+=2)
             {
-                Tuple<int, int> parents = Politics[Politic].Selection(fitnessPerGene);
                 
+                Tuple<int, int> parents = Politics[Politic].Selection(fitnessPerGene);
                 Tuple<Dictionary<int, int>, Dictionary<int, int> > offspring = Crossover(parents.Item1, parents.Item2);
-
+                
                 offsprings.Add(Mutation(offspring.Item1));
                 offsprings.Add(Mutation(offspring.Item2));
             }
+
             // Keep previous best chromosome
             offsprings.Add(Population[bestFitnessIndex]);
 
