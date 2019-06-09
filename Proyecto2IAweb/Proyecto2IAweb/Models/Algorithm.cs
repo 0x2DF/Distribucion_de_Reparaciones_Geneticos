@@ -95,7 +95,7 @@ namespace Proyecto2IAweb
 
         private int RandomAgentFromPool(string serviceCode)
         {
-            return AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count - 1)];
+            return AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count)];
         }
 
         private Dictionary<int, Pair<int, int>> CommissionsAndHoursPerAgent(int index)
@@ -163,7 +163,7 @@ namespace Proyecto2IAweb
             Dictionary<int, int> offspringA = new Dictionary<int, int>();
             Dictionary<int, int> offspringB = new Dictionary<int, int>();
 
-            if (random.Next(0, 100) > (CrossProbability * 100))
+            if (random.Next(0, 101) > (CrossProbability * 100))
             {
                 // Do no cross, copy parents over
                 offspringA = Population[parentIndexA];
@@ -196,7 +196,7 @@ namespace Proyecto2IAweb
             Dictionary<int, int> new_offspring = new Dictionary<int, int>();
             foreach (KeyValuePair<int, int> gene in offspring)
             {
-                if (random.Next(0, 1000) < (MutationProbability * 1000))
+                if (random.Next(0, 1001) < (MutationProbability * 1000))
                 {
                     // Mutate gene
                     string serviceCode = Orders[gene.Key].ServiceCode;
@@ -204,7 +204,7 @@ namespace Proyecto2IAweb
                     new_offspring[gene.Key] = AgentsByService[serviceCode][random.Next(0, AgentsByService[serviceCode].Count())];
                 } else
                 {
-                    new_offspring[gene.Key] = gene.Key;
+                    new_offspring[gene.Key] = gene.Value;
                 }
             }
             return new_offspring;

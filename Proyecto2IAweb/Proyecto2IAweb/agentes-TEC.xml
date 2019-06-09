@@ -1,0 +1,47 @@
+<agents>
+	<agent>
+		<ID>0</ID><name>Philip Ares</name>
+		<services>
+			<service>ILA</service>
+			<service>RCG</service>
+			<service>ICE</service>
+			<service>ICG</service>
+			<service>RCE</service>
+		</services>
+	</agent>
+	<agent>
+		<ID>1</ID><name>Josue Vargas</name>
+		<services>
+			<service>ILA</service>
+			<service>RCG</service>
+			<service>RLA</service>
+		</services>
+	</agent>
+	<agent>
+		<ID>2</ID><name>Valeria Garro</name>
+		<services>
+			<service>ILA</service>
+			<service>ICE</service>
+			<service>ICG</service>
+			<service>RCE</service>
+		</services>
+	</agent>
+	<agent>
+		<ID>3</ID><name>Luis Pablo Monge</name>
+		<services>
+			<service>ICE</service>
+			<service>ICG</service>
+			<service>RCE</service>
+		</services>
+	</agent>
+	<agent>
+		<ID>4</ID><name>Oscar Josue Ulate</name>
+		<services>
+			<service>ILA</service>
+			<service>RCG</service>
+			<service>ICE</service>
+			<service>ICG</service>
+			<service>RCE</service>
+		</services>
+	</agent>
+</agents>

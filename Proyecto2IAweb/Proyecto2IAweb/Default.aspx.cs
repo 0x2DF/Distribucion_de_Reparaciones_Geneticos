@@ -38,9 +38,9 @@ namespace Proyecto2IAweb
             parseXML(getFile());
             if (Session["agents"] != null && Session["orders"] != null)
             {
-                algol = new Algorithm(2, //Politic (0 : random, 1 : fortune wheel, 2 : tourney
-                    5, //Crossings
-                    (float)0.01, //Mutation Probability
+                algol = new Algorithm(1, //Politic (0 : random, 1 : fortune wheel, 2 : tourney
+                    2, //Crossings
+                    (float)0.02, //Mutation Probability
                     50, //Population Size
                     (float)0.5, //Cross Probability
                     (Dictionary<string, Service>)(Session["services"]), //Services 
